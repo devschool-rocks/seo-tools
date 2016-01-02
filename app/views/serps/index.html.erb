@@ -1,0 +1,22 @@
+<%= render 'select_my_domain' %>
+
+<table class="table-serps table table-striped">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Position</th>
+    <th>Change</th>
+    <th>Keyword</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%- @rankings.each do |ranking| %>
+  <tr data-domain="<%= domain_only(ranking.url) %>">
+    <td class="icon">&nbsp;</td>
+    <td><%= ranking.position %></td>
+    <td><%= ranking.change %></td>
+    <td><%= ranking.keyword.value %></td>
+  </tr>
+  <%- end %>
+  </tbody>
+</table>

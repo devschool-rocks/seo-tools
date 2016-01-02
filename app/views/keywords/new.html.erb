@@ -1,0 +1,12 @@
+<div class="back"><a href="/keywords">Back</a></div>
+<%= form_tag '/keywords', class: 'form' do %>
+  <fieldset class="form-group">
+    <%= label_tag :bulk_keywords %> <span>(one per line)</span>
+    <%= text_area_tag :keywords, '', class: 'form-control' %>
+    <div class="note">Duplicates will be automatically scrubbed</div>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <button type="submit" class="btn btn-block btn-primary">Submit</button>
+  </fieldset>
+<%- end %>

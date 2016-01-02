@@ -1,0 +1,20 @@
+<div class="add"><a href="/domains/new">Add domains</a></div>
+<table class="table table-striped">
+  <tr>
+    <th>Domain</th>
+    <th>Added on</th>
+    <th></th>
+  </tr>
+  <%- @domains.each do |d| %>
+  <tr>
+    <td><%= d.value %></td>
+    <td><%= d.created_at.to_date.to_s %></td>
+    <td>
+      <%= link_to d, method: :delete, 
+        data: { confirm: 'Are you sure?' } do %>
+        <i class="fa fa-times"></i>
+      <%- end %>
+    </td>
+  </tr>
+  <%- end %>
+</table>

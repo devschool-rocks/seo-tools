@@ -1,0 +1,24 @@
+<%= render 'form' %>
+
+<table class="table table-striped">
+  <tr>
+    <th>Grade</th>
+    <th>Change</th>
+    <th>Keyword</th>
+    <th>Url</th>
+  </tr>
+  <%- @seo_grades.each do |grade| %>
+  <tr>
+    <td><%= grade.letter_grade %></td>
+    <td><%= grade.change %></td>
+    <td><%= grade.keyword.value %></td>
+    <td><%= grade.url %></td>
+    <td>
+      <%= link_to grade, method: :delete, 
+        data: { confirm: 'Are you sure?' } do %>
+        <i class="fa fa-times"></i>
+      <%- end %>
+    </td>
+  </tr>
+  <%- end %>
+</table>

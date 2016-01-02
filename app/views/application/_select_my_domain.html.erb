@@ -1,0 +1,4 @@
+<%= collection_radio_buttons :domain, :value, Domain.all, :id, :value, {}, { class: 'select-my-domain' } do |rb|  %>
+  <%= rb.radio_button(:"data-value" => rb.object.value) %>
+  <%= rb.label %>
+<%- end %>

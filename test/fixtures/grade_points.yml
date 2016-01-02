@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  importance_id: 
+  label: MyString
+  passed: false
+  grader: MyString
+
+two:
+  importance_id: 
+  label: MyString
+  passed: false
+  grader: MyString

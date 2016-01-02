@@ -1,0 +1,11 @@
+<%= form_for (@seo_grade||SeoGrade.new), class: "form form-horizontal" do |f| %>
+  <fieldset class="form-group">
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+
+    <%= f.label :keyword %>
+    <%= f.text_field :keyword %>
+
+    <button type="submit" class="btn btn-primary">Grade the SEO on my page!</button>
+  </fieldset>
+<%- end %>

@@ -1,0 +1,18 @@
+<div class="back"><a href="/seo_grades">Back</a></div>
+<h1>Showing SimpleRank for:</h1>
+<p>URL: <%= @seo_grade.url %></p>
+<p>KWD:: <%= @seo_grade.keyword.value %></p>
+
+<div class="well"><%= @seo_grade.letter_grade %></div>
+
+<table class="table table-striped">
+<%- @seo_grade.seo_grade_points.each do |grade| %>
+  <tr>
+    <td><%= grade.grade_point.label %></td>
+    <td><%= grade.change %></td>
+    <td><%= grade.score %></td>
+  </tr>
+<%- end %>
+</table>
+
+<p><%= @seo_grade.seo_grade_points.sum(:score) %></p>
