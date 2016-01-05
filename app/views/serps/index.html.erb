@@ -13,9 +13,9 @@
   <%- @rankings.each do |ranking| %>
   <tr data-domain="<%= domain_only(ranking.url) %>">
     <td class="icon">&nbsp;</td>
+    <td><%= ranking.keyword.value %></td>
     <td><%= ranking.position %></td>
     <td><%= ranking.change %></td>
-    <td><%= ranking.keyword.value %></td>
   </tr>
   <%- end %>
   </tbody>
