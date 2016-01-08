@@ -39,10 +39,10 @@ class Ranking < ActiveRecord::Base
       as rankings_info
         inner join rankings as earliest_rankings on
           earliest_rankings.keyword_id = rankings_info.keyword_id and
-          earliest_rankings.created_at::date = current_date - 1
+          earliest_rankings.created_at = rankings_info.max_created_date - interval '1 day'
         inner join rankings as latest_rankings on
           latest_rankings.keyword_id = rankings_info.keyword_id
-          where latest_rankings.created_at::date = current_date
+          where latest_rankings.created_at = rankings_info.max_created_date
           group by earliest_rankings.keyword_id, latest_rankings.keyword_id,
           rankings_info.keyword_id, earliest_rankings.position, latest_rankings.position, rankings_info.url
     SQL
