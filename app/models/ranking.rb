@@ -30,8 +30,7 @@ class Ranking < ActiveRecord::Base
     query = <<-SQL
     select distinct rankings_info.keyword_id,
     rankings_info.url,
-    latest_rankings.position as "current",
-    earliest_rankings.position as "previous",
+    latest_rankings.position as "position",
     max(earliest_rankings.position - latest_rankings.position) as "change"
     from
     (
@@ -41,7 +40,7 @@ class Ranking < ActiveRecord::Base
       min(created_at) as min_created_date,
       max(created_at) as max_created_date
       from rankings
-      group by keyword_id, url
+      group by keyword_id
     )
       as rankings_info
         inner join rankings as earliest_rankings on
