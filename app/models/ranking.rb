@@ -11,10 +11,8 @@ class Ranking < ActiveRecord::Base
 # should be collapsed into a single row showing only the latest date for position and yesterdays record only shows in the change column
   scope :latest, ->{
     with_keywords.
-      select("DISTINCT ON(keywords.value, rankings.position) rankings.*").
-      order("keywords.value, rankings.position").
-      recent_first
-
+        select("DISTINCT ON(keywords.value, rankings.position) rankings.*").
+        order("keywords.value, rankings.position")
   }
 
   scope :previous_day, -> {
@@ -23,7 +21,7 @@ class Ranking < ActiveRecord::Base
   }
 
   scope :with_keywords, -> {
-    joins("LEFT JOIN keywords ON keywords.id = keyword_id")
+    joins("LEFT JOIN keywords ON keywords.id = keyword_id" )
   }
 
   def self.find_ranking_changes
@@ -40,15 +38,15 @@ class Ranking < ActiveRecord::Base
       min(created_at) as min_created_date,
       max(created_at) as max_created_date
       from rankings
-      group by keyword_id
+      group by keyword_id, url
     )
       as rankings_info
         inner join rankings as earliest_rankings on
           earliest_rankings.keyword_id = rankings_info.keyword_id and
-          earliest_rankings.created_at::date = current_date - 4
+          earliest_rankings.created_at::date = current_date - 1
         inner join rankings as latest_rankings on
           latest_rankings.keyword_id = rankings_info.keyword_id
-          where latest_rankings.created_at::date = current_date - 3
+          where latest_rankings.created_at::date = current_date
           group by earliest_rankings.keyword_id, latest_rankings.keyword_id,
           rankings_info.keyword_id, earliest_rankings.position, latest_rankings.position, rankings_info.url
     SQL
@@ -65,7 +63,7 @@ class Ranking < ActiveRecord::Base
     return "-" if previous.nil?
     prev = previous.position
     chg = prev.to_i - position.to_i
-    mod = chg > -1 ? (chg > 0 ? "+" : "") : "-"
+    mod = chg > -1 ? (chg > 0 ? "+" : "") : ""
     "#{mod}#{chg}"
   end
 end

@@ -1,6 +1,6 @@
 class RankingsController < ApplicationController
   def index
-    @rankings = Ranking.find_ranking_changes
+    @ranking = Ranking.find_ranking_changes.latest
   end
 
 end
