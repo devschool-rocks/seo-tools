@@ -4,6 +4,6 @@ class SerpsController < ApplicationController
   respond_to :json, only: :update
 
   def index
-    @rankings = Ranking.latest
+    @rankings = Ranking.find_ranking_changes
   end
 end

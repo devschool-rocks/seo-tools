@@ -4,11 +4,7 @@ class Ranking < ActiveRecord::Base
   scope :recent_first, -> {
     order(created_at: :desc)
   }
-# keyword, position, change
-# devschool, 2, +1
-# devschool, 3, -1
 
-# should be collapsed into a single row showing only the latest date for position and yesterdays record only shows in the change column
   scope :latest, ->{
     with_keywords.
         select("DISTINCT ON(keywords.value, rankings.position) rankings.*").
@@ -43,10 +39,10 @@ class Ranking < ActiveRecord::Base
       as rankings_info
         inner join rankings as earliest_rankings on
           earliest_rankings.keyword_id = rankings_info.keyword_id and
-          earliest_rankings.created_at::date = current_date - 1
+          earliest_rankings.created_at::date = current_date - 2
         inner join rankings as latest_rankings on
           latest_rankings.keyword_id = rankings_info.keyword_id
-          where latest_rankings.created_at::date = current_date
+          where latest_rankings.created_at::date = current_date -1
           group by earliest_rankings.keyword_id, latest_rankings.keyword_id,
           rankings_info.keyword_id, earliest_rankings.position, latest_rankings.position, rankings_info.url
     SQL
