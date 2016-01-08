@@ -4,17 +4,17 @@
   <thead>
   <tr>
     <th></th>
+    <th>Keyword</th>
     <th>Position</th>
     <th>Change</th>
-    <th>Keyword</th>
   </tr>
   </thead>
   <tbody>
   <%- @rankings.each do |ranking| %>
   <tr data-domain="<%= domain_only(ranking.url) %>">
     <td class="icon">&nbsp;</td>
-    <td><%= ranking.keyword.value %></td>
-    <td><%= ranking.position %></td>
+    <td><%= ranking.keyword_id %></td>
+    <td><%= ranking.keyword_id %></td>
     <td><%= ranking.change %></td>
   </tr>
   <%- end %>
