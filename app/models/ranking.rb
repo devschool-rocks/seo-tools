@@ -8,12 +8,20 @@ class Ranking < ActiveRecord::Base
   scope :latest, ->{
     with_keywords.
         select("DISTINCT ON(keywords.value, rankings.position) rankings.*").
-        order("keywords.value, rankings.position")
+        order("rankings.created_at, keywords.value, rankings.position")
+    where("rankings.created_at >= ?", 1.day.ago)
+
+  }
+
+  scope :current_day, ->{
+    with_keywords.
+    latest.
+        where("rankings.created_at >= ?", 1.day.ago).limit(1)
   }
 
   scope :previous_day, -> {
-    latest.
-      where("rankings.created_at <= ?", 1.day.ago).limit(1)
+    with_keywords.
+      where(:created_at => 1.day.ago..Date.today)
   }
 
   scope :with_keywords, -> {
@@ -39,15 +47,20 @@ class Ranking < ActiveRecord::Base
       as rankings_info
         inner join rankings as earliest_rankings on
           earliest_rankings.keyword_id = rankings_info.keyword_id and
-          earliest_rankings.created_at = rankings_info.max_created_date - interval '1 day'
+          earliest_rankings.created_at::date = current_date - 1
         inner join rankings as latest_rankings on
           latest_rankings.keyword_id = rankings_info.keyword_id
-          where latest_rankings.created_at = rankings_info.max_created_date
+          where latest_rankings.created_at >= current_date
           group by earliest_rankings.keyword_id, latest_rankings.keyword_id,
           rankings_info.keyword_id, earliest_rankings.position, latest_rankings.position, rankings_info.url
     SQL
 
     self.find_by_sql(query)
+  end
+
+  def self.no_ranking_for_previous_date
+    select
+
   end
 
   def match=(val)
