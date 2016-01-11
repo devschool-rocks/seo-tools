@@ -8,7 +8,7 @@
   <%- @keywords.each do |kw| %>
   <tr>
     <td><%= kw.value %></td>
-    <td><%= kw.created_at.to_date.to_s %></td>
+    <td><%= kw.created_at.to_date.in_time_zone %></td>
     <td>
       <%= link_to kw, method: :delete, 
         data: { confirm: 'Are you sure?' } do %>
