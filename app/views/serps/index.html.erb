@@ -4,9 +4,9 @@
   <thead>
   <tr>
     <th></th>
+    <th>Keyword</th>
     <th>Position</th>
     <th>Change</th>
-    <th>Keyword</th>
   </tr>
   </thead>
   <tbody>
@@ -15,7 +15,7 @@
     <td class="icon">&nbsp;</td>
     <td><%= ranking.keyword.value %></td>
     <td><%= ranking.position %></td>
-    <td><%= ranking.change %></td>
+    <td><%= ranking[:change] %></td>
   </tr>
   <%- end %>
   </tbody>
